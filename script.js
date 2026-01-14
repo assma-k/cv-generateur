@@ -7,6 +7,17 @@ inp.forEach(function (vari) {
   });
 });
 
+function photoCv() {
+ const phot = document.getElementById("photo").files[0];
+ if(phot){
+  const read = new FileReader();
+  read.onload = function(i){
+    document.getElementById("prev-photo").src = i.target.result;
+  };
+  read.readAsDataURL(phot);
+ };
+};
+
 function ajouterExperience() {
   let ent = document.getElementById("entreprise").value;
   let pos = document.getElementById("poste").value;
@@ -114,4 +125,35 @@ function competenceMaj(){
 
         prev.appendChild(badge);
     });
+};
+
+function languesP() {
+  const lang = document.getElementById("langues").value;
+  const niv = document.getElementById("niveau-select").value;
+
+  let idUnique = Date.now();
+
+  var myDiv = document.createElement("div");
+  myDiv.id = `form-${idUnique}`;
+  myDiv.innerHTML = `
+<div class="formation-item" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+        <strong>${lang}</strong> : <span>${niv}</span>
+        
+        <input type="hidden" name="langues[]" value="${lang}">
+        <input type "hidden" name="niveau[]" value="${niv}">
+
+        <button type="button" onclick="document.getElementById('form-${idUnique}').remove(); document.getElementById('prev-${idUnique}').remove();">
+        Supprimer
+    </button>
+         </div>
+         `;
+         document.getElementById("liste-langues").appendChild(myDiv);
+          
+         var prevDiv = document.createElement("div");
+  prevDiv.id = `prev-${idUnique}`;
+  prevDiv.innerHTML = `<p><strong>${lang}</strong> : ${niv}</p>`;
+
+  document.getElementById("prev-langues").appendChild(prevDiv);
+
+  document.getElementById("langues").value = "";
 };

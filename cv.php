@@ -13,33 +13,34 @@
     <div class="container-fluid p-0">
         <div class="row g-0">
             <div class="col-lg-6 vh-100">
-                <form>
+                <form action="export.php" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <h2>informations général</h2>
-                        <input type="text" id="nom" placeholder="nom" required />
-                        <input type="text" id="prenom" placeholder="prenom" required />
-                        <input type="email" id="email" placeholder="email" required />
-                        <input type="text" id="poste" placeholder="poste visé" />
-                        <input type="tel" id="numero" placeholder="06 00 00 00 00" />
+                        <input type="file" id="photo" name="photo-cv" class="input-group rounded p-2"/>
+                        <input type="text" id="nom" placeholder="nom" required class="input-group rounded p-2 m-3 w-75" />
+                        <input type="text" id="prenom" placeholder="prenom" required class="input-group rounded p-2 m-3 w-75" />
+                        <input type="email" id="email" placeholder="email" required class="input-group rounded p-2 m-3 w-75" />
+                        <input type="text" id="poste" placeholder="poste visé" class="input-group rounded p-2 m-3 w-75" />
+                        <input type="tel" id="numero" placeholder="06 00 00 00 00" class="input-group rounded p-2 m-3 w-75" />
                         <textarea id="profil" rows="4" cols="50" required>mon profil</textarea>
                     </fieldset>
                     <fieldset>
                         <h2>expérience</h2>
                         <div id="liste-esperience"></div>
-                        <input type="text" id="entreprise" placeholder="entreprise" />
-                        <input type="text" id="poste" placeholder="intituler du poste" />
-                        <input type="number" id="dateDebut" placeholder="2020" min="1900" max="2026" />
-                        <input type="number" id="dateFin" placeholder="2025" min="1900" max="2026" />
+                        <input type="text" id="entreprise" placeholder="entreprise"class="input-group rounded p-2 m-3 w-75" />
+                        <input type="text" id="poste" placeholder="intituler du poste" class="input-group rounded p-2 m-3 w-75" />
+                        <input type="number" id="dateDebut" placeholder="2020" min="1900" max="2026" class="input-group rounded p-2 m-3 w-75" />
+                        <input type="number" id="dateFin" placeholder="2025" min="1900" max="2026" class="input-group rounded p-2 m-3 w-75" />
                         <textarea id="descPoste" rows="3" cols="50">description du poste</textarea>
                         <button type="button" id="add-xp" onclick="ajouterExperience()">Ajouter</button>
                     </fieldset>
                     <fieldset>
                         <h2>Formations</h2>
                         <div id="liste-formation"></div>
-                        <input type="text" id="ecole" placeholder="ecole" required />
-                        <input type="text" id="diplome" placeholder="diplome" required />
-                        <input type="number" id="anneeDebut" min="1900" placeholder="2020" required />
-                        <input type="number" id="anneeFin" min="1900" placeholder="2023" required />
+                        <input type="text" id="ecole" placeholder="ecole" required class="input-group rounded p-2 m-3 w-75" />
+                        <input type="text" id="diplome" placeholder="diplome" required class="input-group rounded p-2 m-3 w-75" />
+                        <input type="number" id="anneeDebut" min="1900" placeholder="2020" required class="input-group rounded p-2 m-3 w-75" />
+                        <input type="number" id="anneeFin" min="1900" placeholder="2023" required class="input-group rounded p-2 m-3 w-75" />
                         <button type="button">Ajouter</button>
                     </fieldset>
                     <fieldset>
@@ -77,26 +78,30 @@
                     </fieldset>
                     <fieldset>
                         <h2>Langues</h2>
-                        <input type="text" id="langues" placeholder="langues">
+                        <div id="listes-langues">
+                        <input type="text" id="langues" placeholder="langues" class="input-group rounded p-2 m-3 w-75" >
                         <select name="niveau" id="niveau-select">
+                    
                             <option value="">niveau</option>
                             <option value="debutant">debutant</option>
                             <option value="intermédiaire">intermédiaire</option>
                             <option value="anvancé">anvancé</option>
                             <option value="courant">courant</option>
                         </select>
-                        <button type="button">Ajouter</button>
+                        <button type="button" onclick="languesP()">Ajouter</button>
+                        </div>
                     </fieldset>
                     <fieldset>
                         <h2>Centres d'interêt</h2>
                         <input type="text" id="interet" placeholder="loisir">
                         <input type="text" id="interet" placeholder="loisir">
                     </fieldset>
-
+                    <button type="submit">Enregistrer / Créer le CV</button>
                 </form>
             </div>
             <div class="col-lg-6 vh-100">
                 <div>
+                    <img id="prev-photo"/>
                     <h2 id="p-nom"></h2>
                     <h2 id="p-prenom"></h2>
                     <h3 id="p-poste"></h3>
@@ -115,6 +120,10 @@
                 <div>
                     <h2>Competences</h2>
                 <div id="prev-competence"></div>
+                </div>
+                <div>
+                    <h2>Langues</h2>
+                    <div id="prev-langues"></div>
                 </div>
             </div>
         </div>
