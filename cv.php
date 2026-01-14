@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Génerateur de CV</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
 
@@ -17,70 +16,70 @@
                     <fieldset>
                         <h2>informations général</h2>
                         <input type="file" id="photo" name="photo-cv" class="input-group rounded p-2"/>
-                        <input type="text" id="nom" placeholder="nom" required class="input-group rounded p-2 m-3 w-75" />
-                        <input type="text" id="prenom" placeholder="prenom" required class="input-group rounded p-2 m-3 w-75" />
-                        <input type="email" id="email" placeholder="email" required class="input-group rounded p-2 m-3 w-75" />
-                        <input type="text" id="poste" placeholder="poste visé" class="input-group rounded p-2 m-3 w-75" />
-                        <input type="tel" id="numero" placeholder="06 00 00 00 00" class="input-group rounded p-2 m-3 w-75" />
-                        <textarea id="profil" rows="4" cols="50" required>mon profil</textarea>
+                        <input type="text" id="nom" name="nom" placeholder="nom" required class="input-group rounded p-2 m-3 w-75" />
+                        <input type="text" id="prenom" name="prenom" placeholder="prenom" required class="input-group rounded p-2 m-3 w-75" />
+                        <input type="email" id="email" name="email" placeholder="email" required class="input-group rounded p-2 m-3 w-75" />
+                        <input type="text" id="posteV" name="posteV" placeholder="poste visé" class="input-group rounded p-2 m-3 w-75" />
+                        <input type="tel" id="numero" name="numero" placeholder="06 00 00 00 00" class="input-group rounded p-2 m-3 w-75" />
+                        <textarea id="profil" name="profil" rows="4" cols="50" required>mon profil</textarea>
                     </fieldset>
                     <fieldset>
                         <h2>expérience</h2>
                         <div id="liste-esperience"></div>
-                        <input type="text" id="entreprise" placeholder="entreprise"class="input-group rounded p-2 m-3 w-75" />
-                        <input type="text" id="poste" placeholder="intituler du poste" class="input-group rounded p-2 m-3 w-75" />
-                        <input type="number" id="dateDebut" placeholder="2020" min="1900" max="2026" class="input-group rounded p-2 m-3 w-75" />
-                        <input type="number" id="dateFin" placeholder="2025" min="1900" max="2026" class="input-group rounded p-2 m-3 w-75" />
-                        <textarea id="descPoste" rows="3" cols="50">description du poste</textarea>
+                        <input type="text" id="entreprise" name="entreprise[]" placeholder="entreprise"class="input-group rounded p-2 m-3 w-75" />
+                        <input type="text" id="poste" name="poste[]" placeholder="intituler du poste" class="input-group rounded p-2 m-3 w-75" />
+                        <input type="number" id="dateDebut" name="dateDebut[]" placeholder="2020" min="1900" max="2026" class="input-group rounded p-2 m-3 w-75" />
+                        <input type="number" id="dateFin" name="dateFin[]" placeholder="2025" min="1900" max="2026" class="input-group rounded p-2 m-3 w-75" />
+                        <textarea id="descPoste" name="descPoste[]" rows="3" cols="50">description du poste</textarea>
                         <button type="button" id="add-xp" onclick="ajouterExperience()">Ajouter</button>
                     </fieldset>
                     <fieldset>
                         <h2>Formations</h2>
                         <div id="liste-formation"></div>
-                        <input type="text" id="ecole" placeholder="ecole" required class="input-group rounded p-2 m-3 w-75" />
-                        <input type="text" id="diplome" placeholder="diplome" required class="input-group rounded p-2 m-3 w-75" />
-                        <input type="number" id="anneeDebut" min="1900" placeholder="2020" required class="input-group rounded p-2 m-3 w-75" />
-                        <input type="number" id="anneeFin" min="1900" placeholder="2023" required class="input-group rounded p-2 m-3 w-75" />
+                        <input type="text" id="ecole" name="ecole[]" placeholder="ecole" required class="input-group rounded p-2 m-3 w-75" />
+                        <input type="text" id="diplome" name="diplome[]" placeholder="diplome" required class="input-group rounded p-2 m-3 w-75" />
+                        <input type="number" id="anneeDebut" name="anneeDebut[]" min="1900" placeholder="2020" required class="input-group rounded p-2 m-3 w-75" />
+                        <input type="number" id="anneeFin" name="anneeFin[]" min="1900" placeholder="2023" required class="input-group rounded p-2 m-3 w-75" />
                         <button type="button">Ajouter</button>
                     </fieldset>
                     <fieldset>
                         <h2>Competence</h2>
                         <label class="checkbox">
                             <input type="checkbox" name="competence[]" value="HTML" onchange="competenceMaj()">
-                            <i class="fa-brands fa-html5"></i>
+                            <img src="./ressources/icons8-html-5-50.png">
                             <span>HTML/CSS</span>
                         </label>
                         <label class="checkbox">
                             <input type="checkbox" name="competence[]" value="JS" onchange="competenceMaj()">
-                            <i class="fa-brands fa-js"></i>
+                            <img src="./ressources/icons8-javascript-50.png">
                             <span>JS</span>
                         </label>
                         <label class="checkbox">
                             <input type="checkbox" name="competence[]" value="PHP" onchange="competenceMaj()">
-                            <i class="fa-brands fa-php"></i>
+                            <img src="./ressources/icons8-logo-php-50.png">
                             <span>PHP</span>
                         </label>
                         <label class="checkbox">
                             <input type="checkbox" name="competence[]" value="git" onchange="competenceMaj()">
-                            <i class="fa-brands fa-git-alt"></i>
+                            <img src="./ressources/icons8-git-50.png">
                             <span>git</span>
                         </label>
                         <label class="checkbox">
                             <input type="checkbox" name="competence[]" value="python" onchange="competenceMaj()">
-                            <i class="fa-brands fa-python"></i>
+                            <img src="./ressources/icons8-python-50.png">
                             <span>python</span>
                         </label>
                         <label class="checkbox">
                             <input type="checkbox" name="competence[]" value="SQL" onchange="competenceMaj()">
-                            <i class="fa-solid fa-database"></i>
+                            <img src="./ressources/icons8-sql-50.png">
                             <span>SQL</span>
                         </label>
                     </fieldset>
                     <fieldset>
                         <h2>Langues</h2>
                         <div id="listes-langues">
-                        <input type="text" id="langues" placeholder="langues" class="input-group rounded p-2 m-3 w-75" >
-                        <select name="niveau" id="niveau-select">
+                        <input type="text" id="langues" name="langues[]" placeholder="langues" class="input-group rounded p-2 m-3 w-75" >
+                        <select name="niveau[]" id="niveau-select">
                     
                             <option value="">niveau</option>
                             <option value="debutant">debutant</option>
@@ -93,8 +92,8 @@
                     </fieldset>
                     <fieldset>
                         <h2>Centres d'interêt</h2>
-                        <input type="text" id="interet" placeholder="loisir">
-                        <input type="text" id="interet" placeholder="loisir">
+                        <input type="text" id="interet" name="interet1" placeholder="loisir">
+                        <input type="text" id="interet" name="interet2" placeholder="loisir">
                     </fieldset>
                     <button type="submit">Enregistrer / Créer le CV</button>
                 </form>
