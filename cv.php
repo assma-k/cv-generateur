@@ -25,7 +25,7 @@
                     </fieldset>
                     <fieldset>
                         <h2>expérience</h2>
-                        <div id="liste-esperience"></div>
+                        <div id="liste-experience"></div>
                         <input type="text" id="entreprise" name="entreprise[]" placeholder="entreprise"class="input-group rounded p-2 m-3 w-75" />
                         <input type="text" id="poste" name="poste[]" placeholder="intituler du poste" class="input-group rounded p-2 m-3 w-75" />
                         <input type="number" id="dateDebut" name="dateDebut[]" placeholder="2020" min="1900" max="2026" class="input-group rounded p-2 m-3 w-75" />
@@ -40,7 +40,7 @@
                         <input type="text" id="diplome" name="diplome[]" placeholder="diplome" required class="input-group rounded p-2 m-3 w-75" />
                         <input type="number" id="anneeDebut" name="anneeDebut[]" min="1900" placeholder="2020" required class="input-group rounded p-2 m-3 w-75" />
                         <input type="number" id="anneeFin" name="anneeFin[]" min="1900" placeholder="2023" required class="input-group rounded p-2 m-3 w-75" />
-                        <button type="button">Ajouter</button>
+                        <button type="button" onclick="ajouterFormation()">Ajouter</button>
                     </fieldset>
                     <fieldset>
                         <h2>Competence</h2>
@@ -100,17 +100,17 @@
             </div>
             <div class="col-lg-6 vh-100">
                 <div>
-                    <img id="prev-photo"/>
+                    <img id="p-photo"/>
                     <h2 id="p-nom"></h2>
                     <h2 id="p-prenom"></h2>
-                    <h3 id="p-poste"></h3>
+                    <h3 id="p-posteV"></h3>
                     <p class="p-email"></p>
                     <p id="p-numero"></p>
-                    <p id="p-profils"></p>
+                    <p id="p-profil"></p>
                 </div>
                 <div>
                     <h2>Experiences</h2>
-                    <div id="prev-esperience-liste"></div>
+                    <div id="prev-experience-liste"></div>
                 </div>
                 <div>
                     <h2>Formations</h2>

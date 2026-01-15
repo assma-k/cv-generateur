@@ -13,7 +13,7 @@ $entreprise = $_POST["entreprise"];
 $poste = $_POST["poste"];
 $dateDebut = $_POST["dateDebut"];
 $dateFin = $_POST["dateFin"];
-$descPoste = $_POST["descposte"];
+$descPoste = $_POST["descPoste"];
 
 $ecole = $_POST["ecole"];
 $diplome = $_POST["diplome"];

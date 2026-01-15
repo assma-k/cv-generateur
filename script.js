@@ -3,7 +3,10 @@ inp.forEach(function (vari) {
   vari.addEventListener("input", function () {
     let idSource = this.id;
     let cible = document.getElementById("p-" + idSource);
-    cible.textContent = this.value;
+
+    if (cible) {
+      cible.textContent = this.value;
+    }
   });
 });
 
@@ -112,21 +115,36 @@ document.getElementById("prev-formation-liste").appendChild(prevDiv);
 
 function competenceMaj(){
     const prev = document.getElementById("prev-competence");
-    prev.innerHTML = "";
+    if (!prev) {
+        console.warn("L'élément prev-competence n'existe pas");
+        return;
+    }
     const check = document.querySelectorAll('input[name="competence[]"]:checked');
 
     check.forEach(box => {
         const comp = box.value;
-        const icon = box.nextElementSibling.className;
 
-        const badge = document.createElement("span");
-        badge.className = "competence-badge";
-        badge.innerHTML = `<i class="${icon}"></i> ${comp}`;
+        const img = box.parentElement.querySelector("img");
+        
+        if (img) {
+            const badge = document.createElement("span");
+            badge.className = "competence-badge";
+            badge.style.display = "inline-flex";
+            badge.style.alignItems = "center";
+            badge.style.gap = "8px";
+            badge.style.margin = "5px";
 
-        prev.appendChild(badge);
+            const imgClone = img.cloneNode();
+            imgClone.style.width = "24px";
+            imgClone.style.height = "24px";
+            
+            badge.appendChild(imgClone);
+            badge.appendChild(document.createTextNode(comp));
+
+            prev.appendChild(badge);
+        }
     });
 };
-
 function languesP() {
   const lang = document.getElementById("langues").value;
   const niv = document.getElementById("niveau-select").value;
@@ -147,13 +165,18 @@ function languesP() {
     </button>
          </div>
          `;
-         document.getElementById("liste-langues").appendChild(myDiv);
+         const listeLangues = document.getElementById("listes-langues");
+  if (listeLangues) {
+    listeLangues.appendChild(myDiv);
+  };
           
          var prevDiv = document.createElement("div");
   prevDiv.id = `prev-${idUnique}`;
   prevDiv.innerHTML = `<p><strong>${lang}</strong> : ${niv}</p>`;
 
-  document.getElementById("prev-langues").appendChild(prevDiv);
-
+  const prevLangues = document.getElementById("prev-langues");
+  if (prevLangues) {
+    prevLangues.appendChild(prevDiv);
+  }
   document.getElementById("langues").value = "";
 };
