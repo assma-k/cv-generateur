@@ -1,6 +1,12 @@
 <?php
 require "vendor/autoload.php";
 use Dompdf\Dompdf;
+$dompfd = new Dompdf();
+$dompfd -> loadHtml($html);
+$dompfd -> setPaper("A4, portrait");
+$dompfd -> render();
+$dompfd -> stream();
+
 
 $nom = htmlspecialchars($_POST["nom"]);
 $prenom = htmlspecialchars($_POST["prenom"]);
@@ -88,7 +94,6 @@ if (!empty($competence)) {
 }
 $html .= '</div>';
 
-// 5. AJOUT DES LANGUES
 $html .= '<div class="section"><h2>Langues</h2>';
 foreach ($langues as $index => $lang) {
     if (!empty($lang)) {

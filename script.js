@@ -15,7 +15,7 @@ function photoCv() {
  if(phot){
   const read = new FileReader();
   read.onload = function(i){
-    document.getElementById("prev-photo").src = i.target.result;
+    document.getElementById("p-photo").src = i.target.result;
   };
   read.readAsDataURL(phot);
  };
@@ -119,11 +119,18 @@ function competenceMaj(){
         console.warn("L'élément prev-competence n'existe pas");
         return;
     }
+
+    while (prev.firstChild) {
+        prev.removeChild(prev.firstChild);
+    }
+
+
     const check = document.querySelectorAll('input[name="competence[]"]:checked');
+    
 
     check.forEach(box => {
         const comp = box.value;
-
+       
         const img = box.parentElement.querySelector("img");
         
         if (img) {
