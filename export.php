@@ -1,17 +1,35 @@
 <?php
 require "vendor/autoload.php";
+use Dompdf\Options;
 use Dompdf\Dompdf;
-$dompfd = new Dompdf();
-$dompfd -> loadHtml($html);
-$dompfd -> setPaper("A4, portrait");
-$dompfd -> render();
-$dompfd -> stream();
+$options = new Options();
+
+$options->set('isRemoteEnabled', true); 
+$options->set('isHtml5ParserEnabled', true);
+$options->set('chroot', __DIR__);
+
+$photo = "";
+
+if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
+    $uploaddir = 'uploads/';
+    if (!is_dir($uploaddir)) { mkdir($uploaddir, 0777, true); }
+    
+    $filename = time() . '_' . $_FILES['photo']['name'];
+    $uploadfile = $uploaddir . $filename;
+
+    if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadfile)) {
+        $type = pathinfo($uploadfile, PATHINFO_EXTENSION);
+        $data = file_get_contents($uploadfile);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        $photo = '<img src="' . $base64 . '" class="p-photo" style="width:120px; height:120px; border-radius:50%;">';
+    }
+}
 
 
 $nom = htmlspecialchars($_POST["nom"]);
 $prenom = htmlspecialchars($_POST["prenom"]);
 $email = htmlspecialchars($_POST["email"]);
-$postev = htmlspecialchars($_POST["postev"]);
+$postev = htmlspecialchars($_POST["posteV"]);
 $numero = htmlspecialchars($_POST["numero"]);
 $profil = htmlspecialchars($_POST["profil"]);
 
@@ -40,66 +58,136 @@ $html = <<<EOD
 <head>
     <meta charset="UTF-8">
     <style>
-        body { font-family: 'Helvetica', sans-serif; font-size: 13px; color: #333; }
-        .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
-        h1 { margin: 0; text-transform: uppercase; color: #000; }
-        h2 { background-color: #eee; padding: 5px; font-size: 16px; border-left: 5px solid #333; }
-        .section { margin-bottom: 15px; }
-        .item { margin-bottom: 10px; }
-        .date { font-style: italic; color: #666; }
-        .badge { display: inline-block; background: #333; color: #fff; padding: 3px 8px; margin: 2px; border-radius: 3px; font-size: 11px; }
+        body { font-family: 'Helvetica', sans-serif; font-size: 13px; color: #333; margin: 0; padding: 0; }
+        .cv-container { width: 90%; margin: 20px auto; text-align: center; }
+
+        .p-photo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; }
+        
+        .header h2 { margin: 5px 0; color: #000; font-size: 22px; }
+        .header p { margin: 2px 0; color: #555; }
+        .poste-vise { color: #333; font-size: 18px; margin: 10px 0; }
+
+        #p-profil { 
+            width: 75%; 
+            margin: 15px auto; 
+            text-align: center; 
+            white-space: pre-wrap; 
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .separator { 
+            border: none; 
+            border-bottom: 1px solid #000; 
+            width: 80%; 
+            margin: 15px auto; 
+        }
+
+        h3 { text-transform: uppercase; font-size: 16px; margin-top: 20px; }
+        .text-start-block { text-align: left; width: 80%; margin: 0 auto; margin-bottom: 10px; }
+
+        .comp-container { text-align: center; margin-top: 10px; }
+        .comp-item { 
+            display: inline-block; 
+            width: 80px; 
+            text-align: center; 
+            vertical-align: top; 
+            margin: 5px; 
+        }
+        .comp-item strong { display: block; font-size: 10px; margin-bottom: 5px; }
+        .comp-item img { width: 50px; height: 50px; display: block; margin: 0 auto; }
+
+        .date { font-style: italic; color: #777; font-size: 11px; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>$prenom $nom</h1>
-        <p><strong>$postev</strong></p>
-        <p>$email | $numero</p>
-    </div>
+    <div class="cv-container">
+        <div class="header">
+            $photo
+            <h1>$prenom $nom</h1>
+            <p><strong>$postev</strong></p>
+            <p>$email | $numero</p>
+        </div>
 
-    <div class="section">
-        <h2>Profil</h2>
-        <p>$profil</p>
-    </div>
+        <div id="p-profil">$profil</div>
+        
+        <div class="separator"></div>
+
+        <div class="section">
+            <h3>Expériences</h3>
+            <div class="text-start-block">
 EOD;
 
-$html .= '<div class="section"><h2>Expériences Professionnelles</h2>';
 foreach ($entreprise as $index => $ent) {
     if (!empty($ent)) {
-        $html .= '<div class="item">';
+        $html .= '<div style="margin-bottom:15px;">';
         $html .= '<strong>' . htmlspecialchars($ent) . '</strong> - ' . htmlspecialchars($poste[$index]);
         $html .= '<br><span class="date">' . htmlspecialchars($dateDebut[$index]) . ' à ' . htmlspecialchars($dateFin[$index]) . '</span>';
-        $html .= '<p>' . nl2br(htmlspecialchars($descPoste[$index])) . '</p>';
+        $html .= '<p style="margin-top:5px;">' . nl2br(htmlspecialchars($descPoste[$index])) . '</p>';
         $html .= '</div>';
     }
 }
-$html .= '</div>';
 
-$html .= '<div class="section"><h2>Formations</h2>';
-foreach ($ecole as $index => $eco) {
-    if (!empty($eco)) {
-        $html .= '<div class="item">';
-        $html .= '<strong>' . htmlspecialchars($eco) . '</strong> - ' . htmlspecialchars($diplome[$index]);
-        $html .= '<br><span class="date">' . htmlspecialchars($anneeDebut[$index]) . ' à ' . htmlspecialchars($anneeFin[$index]) . '</span>';
-        $html .= '</div>';
-    }
-}
-$html .= '</div>';
+$html .= '</div><div class="separator"></div></div>';
 
-$html .= '<div class="section"><h2>Compétences Techniques</h2>';
+$html .= '<div class="section"><h3>Compétences</h3><div class="comp-container">';
 if (!empty($competence)) {
     foreach ($competence as $comp) {
-        $html .= '<span class="badge">' . htmlspecialchars($comp) . '</span> ';
+        $imgName = strtolower(trim($comp));
+
+        if ($imgName == "html" || $imgName == "html/css") {
+            $imgName = "html-5";
+        } elseif ($imgName == "js") {
+            $imgName = "javascript";
+        } 
+
+        $imgPath = __DIR__ . '/ressources/icons8-' . $imgName . '-50.png';
+        
+        $html .= '<div class="comp-item">';
+        $html .= '<strong>' . htmlspecialchars($comp) . '</strong>';
+        
+        if (file_exists($imgPath)) {
+            $dataImg = file_get_contents($imgPath);
+            $base64Img = 'data:image/png;base64,' . base64_encode($dataImg);
+            $html .= '<img src="' . $base64Img . '">';
+        } else { 
+        }
+        $html .= '</div>';
     }
 }
-$html .= '</div>';
+        $html .= '</div>';
+    
 
-$html .= '<div class="section"><h2>Langues</h2>';
+$html .= '</div><div class="separator"></div></div>';
+
+$html .= '<div class="section"><h3>Langues</h3><div class="text-start-block">';
 foreach ($langues as $index => $lang) {
     if (!empty($lang)) {
-        $html .= '<div>' . htmlspecialchars($lang) . ' : <em>' . htmlspecialchars($niveau[$index]) . '</em></div>';
+        $html .= '<div><strong>' . htmlspecialchars($lang) . '</strong> : ' . htmlspecialchars($niveau[$index]) . '</div>';
     }
 }
-$html .= '</div>';
+$html .= '</div><div class="separator"></div></div>';
 
-$html .= '</body></html>';
+$html .= '      </td>
+                    <td style="width: 50%; vertical-align: top;">
+                        <h3>Centres d\'intérêt</h3>';
+if (!empty($interet1)) $html .= '<div>• ' . $interet1 . '</div>';
+if (!empty($interet2)) $html .= '<div>• ' . $interet2 . '</div>';
+$html .= '      </td>
+                </tr>
+            </table>
+        </div>';
+
+$html .= '</div></body></html>';
+
+
+$dompfd = new Dompdf($options);
+$dompfd -> loadHtml($html);
+$dompfd -> setPaper("A4", "portrait");
+$dompfd -> render();
+
+ob_end_clean(); 
+
+$dompfd->stream("mon_cv.pdf", ["Attachment" => false]);
+exit();
+

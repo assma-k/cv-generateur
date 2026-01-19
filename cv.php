@@ -11,17 +11,17 @@
 <body>
     <div class="container-fluid p-0">
         <div class="row g-0">
-            
+
             <div class="col-12 col-lg-6 min-vh-100 bg-dark text-light p-4" data-bs-theme="dark">
                 <div class="p-3 text-end">
-    <button class="btn btn-outline-secondary" id="themeToggler" onclick="toggleMode()">
-        <span id="themeIcon">🌙</span> Mode Sombre
-    </button>
-</div>
+                    <button class="btn btn-outline-secondary" id="themeToggler" onclick="toggleMode()">
+                        <span id="themeIcon">🌙</span> Mode Sombre
+                    </button>
+                </div>
                 <form action="export.php" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <h2 class="ms-2 mt-3 mb-3">informations général</h2>
-                        <input type="file" id="photo" name="photo-cv" class="form-control rounded p-2 w-75 ms-2 mt-3 mb-3" onchange="photoCv()"/>
+                        <input type="file" id="photo" name="photo" class="form-control rounded p-2 w-75 ms-2 mt-3 mb-3" onchange="photoCv()" />
                         <input type="text" id="nom" name="nom" placeholder="nom" required class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75" />
                         <input type="text" id="prenom" name="prenom" placeholder="prenom" required class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75" />
                         <input type="email" id="email" name="email" placeholder="email" class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75" />
@@ -32,7 +32,7 @@
                     <fieldset>
                         <h2 class="ms-2 mt-3 mb-3">expérience</h2>
                         <div id="liste-experience"></div>
-                        <input type="text" id="entreprise" name="entreprise[]" placeholder="entreprise"class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75" />
+                        <input type="text" id="entreprise" name="entreprise[]" placeholder="entreprise" class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75" />
                         <input type="text" id="poste" name="poste[]" placeholder="intituler du poste" class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75" />
                         <input type="number" id="dateDebut" name="dateDebut[]" placeholder="2020" min="1900" max="2026" class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75" />
                         <input type="number" id="dateFin" name="dateFin[]" placeholder="2025" min="1900" max="2026" class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75" />
@@ -44,58 +44,58 @@
                         <div id="liste-formation"></div>
                         <input type="text" id="ecole" name="ecole[]" placeholder="ecole" class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75" />
                         <input type="text" id="diplome" name="diplome[]" placeholder="diplome" class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75" />
-                        <input type="number" id="anneeDebut" name="anneeDebut[]" min="1900" placeholder="2020"  class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75" />
-                        <input type="number" id="anneeFin" name="anneeFin[]" min="1900" placeholder="2023"  class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75" />
+                        <input type="number" id="anneeDebut" name="anneeDebut[]" min="1900" placeholder="2020" class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75" />
+                        <input type="number" id="anneeFin" name="anneeFin[]" min="1900" placeholder="2023" class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75" />
                         <button type="button" onclick="ajouterFormation()" class="btn btn-outline-light ms-2 mt-3 mb-3 ms-5 w-50 rounded">Ajouter</button>
                     </fieldset>
                     <fieldset>
                         <h2 class="ms-2 mt-3 mb-3">Competence</h2>
                         <div class="d-flex flex-row gap-3">
-                        <label class="checkbox d-flex flex-column-reverse align-items-center mb-4">
-                            <input type="checkbox" name="competence[]" value="HTML" onchange="competenceMaj()">
-                            <img src="./ressources/icons8-html-5-50.png">
-                            <span>HTML/CSS</span>
-                        </label>
-                        <label class="checkbox d-flex flex-column-reverse align-items-center mb-4">
-                            <input type="checkbox" name="competence[]" value="JS" onchange="competenceMaj()">
-                            <img src="./ressources/icons8-javascript-50.png">
-                            <span>JS</span>
-                        </label>
-                        <label class="checkbox d-flex flex-column-reverse align-items-center mb-4">
-                            <input type="checkbox" name="competence[]" value="PHP" onchange="competenceMaj()">
-                            <img src="./ressources/icons8-logo-php-50.png">
-                            <span>PHP</span>
-                        </label>
-                        <label class="checkbox d-flex flex-column-reverse align-items-center mb-4">
-                            <input type="checkbox" name="competence[]" value="git" onchange="competenceMaj()">
-                            <img src="./ressources/icons8-git-50.png">
-                            <span>git</span>
-                        </label>
-                        <label class="checkbox d-flex flex-column-reverse align-items-center mb-4">
-                            <input type="checkbox" name="competence[]" value="python" onchange="competenceMaj()">
-                            <img src="./ressources/icons8-python-50.png">
-                            <span>python</span>
-                        </label>
-                        <label class="checkbox d-flex flex-column-reverse align-items-center mb-4">
-                            <input type="checkbox" name="competence[]" value="SQL" onchange="competenceMaj()">
-                            <img src="./ressources/icons8-sql-50.png">
-                            <span>SQL</span>
-                        </label>
+                            <label class="checkbox d-flex flex-column-reverse align-items-center mb-4">
+                                <input type="checkbox" name="competence[]" value="HTML" onchange="competenceMaj()">
+                                <img src="./ressources/icons8-html-5-50.png" width="50" height="50" class="mb-1">
+                                <span>HTML/CSS</span>
+                            </label>
+                            <label class="checkbox d-flex flex-column-reverse align-items-center mb-4">
+                                <input type="checkbox" name="competence[]" value="JS" onchange="competenceMaj()">
+                                <img src="./ressources/icons8-javascript-50.png" width="50" height="50" class="mb-1">
+                                <span>JS</span>
+                            </label>
+                            <label class="checkbox d-flex flex-column-reverse align-items-center mb-4">
+                                <input type="checkbox" name="competence[]" value="PHP" onchange="competenceMaj()">
+                                <img src="./ressources/icons8-php-50.png" width="50" height="50" class="mb-1">
+                                <span>PHP</span>
+                            </label>
+                            <label class="checkbox d-flex flex-column-reverse align-items-center mb-4">
+                                <input type="checkbox" name="competence[]" value="git" onchange="competenceMaj()">
+                                <img src="./ressources/icons8-git-50.png" width="50" height="50" class="mb-1">
+                                <span>git</span>
+                            </label>
+                            <label class="checkbox d-flex flex-column-reverse align-items-center mb-4">
+                                <input type="checkbox" name="competence[]" value="python" onchange="competenceMaj()">
+                                <img src="./ressources/icons8-python-50.png" width="50" height="50" class="mb-1">
+                                <span>python</span>
+                            </label>
+                            <label class="checkbox d-flex flex-column-reverse align-items-center mb-4">
+                                <input type="checkbox" name="competence[]" value="SQL" onchange="competenceMaj()">
+                                <img src="./ressources/icons8-sql-50.png" width="50" height="50" class="mb-1">
+                                <span>SQL</span>
+                            </label>
                         </div>
                     </fieldset>
                     <fieldset>
                         <h2 class="ms-2 mt-3 mb-3">Langues</h2>
                         <div id="listes-langues">
-                        <input type="text" id="langues" name="langues[]" placeholder="langues" class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75" >
-                        <select name="niveau[]" id="niveau-select">
-                    
-                            <option value="">niveau</option>
-                            <option value="debutant">debutant</option>
-                            <option value="intermédiaire">intermédiaire</option>
-                            <option value="anvancé">anvancé</option>
-                            <option value="courant">courant</option>
-                        </select>
-                        <button type="button" onclick="languesP()" class="btn btn-outline-light ms-2 mt-3 mb-3 ms-5 w-50 rounded">Ajouter</button>
+                            <input type="text" id="langues" name="langues[]" placeholder="langues" class="form-control rounded p-2 ms-2 mt-3 mb-3 w-75">
+                            <select name="niveau[]" id="niveau-select">
+
+                                <option value="">niveau</option>
+                                <option value="debutant">debutant</option>
+                                <option value="intermédiaire">intermédiaire</option>
+                                <option value="anvancé">anvancé</option>
+                                <option value="courant">courant</option>
+                            </select>
+                            <button type="button" onclick="languesP()" class="btn btn-outline-light ms-2 mt-3 mb-3 ms-5 w-50 rounded">Ajouter</button>
                         </div>
                     </fieldset>
                     <fieldset>
@@ -106,42 +106,47 @@
                     <button type="submit" class="btn btn-outline-light ms-2 mt-3 mb-3 ms-5 w-50 rounded">Enregistrer / Créer le CV</button>
                 </form>
             </div>
-            <div class="col-12 col-lg-6 min-vh-100 text-center">
-                <div class="clearfix">
-                    <img id="p-photo"/>
+            <div class="col-12 col-lg-6 min-vh-100">
+                <div class="w-75 mx-auto text-center">
                     <div class="clearfix">
-                    <h2><span id="p-nom" class="ms-3"></span>
-                    <span id="p-prenom"></span></h2>
+                        <img id="p-photo" class="rounded-circle d-block h-auto mb-3 w-25 mx-auto" />
+                        <div class="clearfix">
+                            <h2><span id="p-nom" class="ms-3"></span>
+                                <span id="p-prenom"></span>
+                            </h2>
+                        </div>
+                        <p><span id="p-email"></span> | <span id="p-numero"></span></p>
+                        <h4 id="p-posteV"></h4>
+
+                        <p id="p-profil" class="text-break w-50 mx-auto text-center"></p>
+
+                        <fieldset class="border border-bottom-1 border-dark w-auto mx-auto"></fieldset>
                     </div>
-                    <p><span id="p-email"></span> | <span id="p-numero"></span></p>
-                    <h4 id="p-posteV"></h4>
-                    <p id="p-profil"></p>
-                    <fieldset class="border border-bottom-1 border-dark w-75 mx-auto"></fieldset>
-                </div>
-                <div>
-                    <h3>Experiences</h3>
-                    <div id="prev-experience-liste"></div>
-                    <fieldset class="border border-bottom-1 border-dark w-75 mx-auto"></fieldset>
-                </div>
-                <div>
-                    <h3>Formations</h3>
-                    <div id="prev-formation-liste"></div>
-                    <fieldset class="border border-bottom-1 border-dark w-75 mx-auto"></fieldset>
-                </div>
-                <div>
-                    <h3>Competences</h3>
-                <div id="prev-competence"></div>
-                <fieldset class="border border-bottom-1 border-dark w-75 mx-auto"></fieldset>
-                </div>
-                <div>
-                    <h3>Langues</h3>
-                    <div id="prev-langues"></div>
-                    <fieldset class="border border-bottom-1 border-dark w-75 mx-auto"></fieldset>
-                </div>
-                <div>
-                    <h3>centre d'interêt</h3>
-                    <div id="p-interet1"></div>
-                    <div id="p-interet2"></div>
+                    <div>
+                        <h3>Experiences</h3>
+                        <div id="prev-experience-liste" class="w-75 text-break text-start m-3"></div>
+                        <fieldset class="border border-bottom-1 border-dark w-auto mx-auto"></fieldset>
+                    </div>
+                    <div>
+                        <h3>Formations</h3>
+                        <div id="prev-formation-liste" class="w-75 text-break text-start m-3"></div>
+                        <fieldset class="border border-bottom-1 border-dark w-auto mx-auto"></fieldset>
+                    </div>
+                    <div>
+                        <h3>Competences</h3>
+                        <div id="prev-competence"></div>
+                        <fieldset class="border border-bottom-1 border-dark w-auto mx-auto"></fieldset>
+                    </div>
+                    <div>
+                        <h3>Langues</h3>
+                        <div id="prev-langues" class="w-75 text-star m-3t"></div>
+                        <fieldset class="border border-bottom-1 border-dark w-auto mx-auto"></fieldset>
+                    </div>
+                    <div>
+                        <h3>centre d'interêt</h3>
+                        <div id="p-interet1" class="text-start w-75 m-3"></div>
+                        <div id="p-interet2" class="text-start w-75 m-3"></div>
+                    </div>
                 </div>
             </div>
         </div>

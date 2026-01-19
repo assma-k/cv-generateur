@@ -138,12 +138,15 @@ function competenceMaj(){
             badge.className = "competence-badge";
             badge.style.display = "inline-flex";
             badge.style.alignItems = "center";
+            badge.style.flexDirection = "column";
             badge.style.gap = "8px";
-            badge.style.margin = "5px";
+            badge.style.margin = "10px";
 
             const imgClone = img.cloneNode();
-            imgClone.style.width = "24px";
-            imgClone.style.height = "24px";
+            imgClone.style.width = "50px";
+            imgClone.style.height = "50px";
+            imgClone.className = "mb-2";
+            imgClone.style.objectFit = "contain";
             
             badge.appendChild(imgClone);
             badge.appendChild(document.createTextNode(comp));
