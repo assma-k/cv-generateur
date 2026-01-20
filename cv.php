@@ -5,20 +5,31 @@
     <meta charset="UTF-8">
     <title>Génerateur de CV</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        body,
+        html {
+            height: 100%;
+            overflow: hidden;
+        }
 
+        .scroll-column {
+            height: 100vh;
+            overflow-y: auto;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container-fluid p-0">
         <div class="row g-0">
 
-            <div class="col-12 col-lg-6 min-vh-100 bg-dark text-light p-4" data-bs-theme="dark">
+            <div class="col-12 col-lg-6 min-vh-100 bg-dark text-light p-4 scroll-column" data-bs-theme="dark">
                 <div class="p-3 text-end">
                     <button class="btn btn-outline-secondary" id="themeToggler" onclick="toggleMode()">
                         <span id="themeIcon">🌙</span> Mode Sombre
                     </button>
                 </div>
-                <form action="export.php" method="post" enctype="multipart/form-data">
+                <form action="export.php" method="post" enctype="multipart/form-data" target="_blank">
                     <fieldset>
                         <h2 class="ms-2 mt-3 mb-3">informations général</h2>
                         <input type="file" id="photo" name="photo" class="form-control rounded p-2 w-75 ms-2 mt-3 mb-3" onchange="photoCv()" />
@@ -106,7 +117,7 @@
                     <button type="submit" class="btn btn-outline-light ms-2 mt-3 mb-3 ms-5 w-50 rounded">Enregistrer / Créer le CV</button>
                 </form>
             </div>
-            <div class="col-12 col-lg-6 min-vh-100">
+            <div class="col-12 col-lg-6 min-vh-100 scroll-column">
                 <div class="w-75 mx-auto text-center">
                     <div class="clearfix">
                         <img id="p-photo" class="rounded-circle d-block h-auto mb-3 w-25 mx-auto" />
@@ -150,6 +161,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <script src="script.js"></script>
 </body>

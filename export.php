@@ -1,19 +1,20 @@
 <?php
 require "vendor/autoload.php";
+
 use Dompdf\Options;
 use Dompdf\Dompdf;
-$options = new Options();
 
-$options->set('isRemoteEnabled', true); 
+$options = new Options();
+$options->set('isRemoteEnabled', true);
 $options->set('isHtml5ParserEnabled', true);
 $options->set('chroot', __DIR__);
 
 $photo = "";
 
 if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
-    $uploaddir = 'uploads/';
-    if (!is_dir($uploaddir)) { mkdir($uploaddir, 0777, true); }
-    
+    $uploaddir = __DIR__ . '/uploads/';
+    @mkdir($uploaddir, 0777, true);
+
     $filename = time() . '_' . $_FILES['photo']['name'];
     $uploadfile = $uploaddir . $filename;
 
@@ -21,36 +22,35 @@ if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
         $type = pathinfo($uploadfile, PATHINFO_EXTENSION);
         $data = file_get_contents($uploadfile);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        $photo = '<img src="' . $base64 . '" class="p-photo" style="width:120px; height:120px; border-radius:50%;">';
-    }
-}
+        $photo = '<img src="' . $base64 . '" style="width:120px; height:120px; border-radius:50%;">';
+    };
+};
+echo $photo;
 
+$nom = isset($_POST["nom"]) ? htmlspecialchars($_POST["nom"]) : "";
+$prenom = isset($_POST["prenom"]) ? htmlspecialchars($_POST["prenom"]) : "";
+$email = isset($_POST["email"]) ? htmlspecialchars($_POST["email"]) : "";
+$postev = isset($_POST["posteV"]) ? htmlspecialchars($_POST["posteV"]) : "";
+$numero = isset($_POST["numero"]) ? htmlspecialchars($_POST["numero"]) : "";
+$profil = isset($_POST["profil"]) ? htmlspecialchars($_POST["profil"]) : "";
 
-$nom = htmlspecialchars($_POST["nom"]);
-$prenom = htmlspecialchars($_POST["prenom"]);
-$email = htmlspecialchars($_POST["email"]);
-$postev = htmlspecialchars($_POST["posteV"]);
-$numero = htmlspecialchars($_POST["numero"]);
-$profil = htmlspecialchars($_POST["profil"]);
+$entreprise = isset($_POST["entreprise"]) ? $_POST["entreprise"] : [];
+$poste = isset($_POST["poste"]) ? $_POST["poste"] : [];
+$dateDebut = isset($_POST["dateDebut"]) ? $_POST["dateDebut"] : [];
+$dateFin = isset($_POST["dateFin"]) ? $_POST["dateFin"] : [];
+$descPoste = isset($_POST["descPoste"]) ? $_POST["descPoste"] : [];
 
-$entreprise = $_POST["entreprise"];
-$poste = $_POST["poste"];
-$dateDebut = $_POST["dateDebut"];
-$dateFin = $_POST["dateFin"];
-$descPoste = $_POST["descPoste"];
+$ecole = isset($_POST["ecole"]) ? $_POST["ecole"] : [];
+$diplome = isset($_POST["diplome"]) ? $_POST["diplome"] : [];
+$anneeDebut = isset($_POST["anneeDebut"]) ? $_POST["anneeDebut"] : [];
+$anneeFin = isset($_POST["anneeFin"]) ? $_POST["anneeFin"] : [];
 
-$ecole = $_POST["ecole"];
-$diplome = $_POST["diplome"];
-$anneeDebut = $_POST["anneeDebut"];
-$anneeFin = $_POST["anneeFin"];
+$competence = isset($_POST["competence"]) ? $_POST["competence"] : [];
+$langues = isset($_POST["langues"]) ? $_POST["langues"] : [];
+$niveau = isset($_POST["niveau"]) ? $_POST["niveau"] : [];
 
-$competence = $_POST["competence"];
-
-$langues = $_POST["langues"];
-$niveau = $_POST["niveau"];
-
-$interet1 = htmlspecialchars($_POST["interet1"]);
-$interet2 = htmlspecialchars($_POST["interet2"]);
+$interet1 = isset($_POST["interet1"]) ? htmlspecialchars($_POST["interet1"]) : "";
+$interet2 = isset($_POST["interet2"]) ? htmlspecialchars($_POST["interet2"]) : "";
 
 $html = <<<EOD
 <!DOCTYPE html>
@@ -121,14 +121,29 @@ EOD;
 foreach ($entreprise as $index => $ent) {
     if (!empty($ent)) {
         $html .= '<div style="margin-bottom:15px;">';
-        $html .= '<strong>' . htmlspecialchars($ent) . '</strong> - ' . htmlspecialchars($poste[$index]);
-        $html .= '<br><span class="date">' . htmlspecialchars($dateDebut[$index]) . ' à ' . htmlspecialchars($dateFin[$index]) . '</span>';
-        $html .= '<p style="margin-top:5px;">' . nl2br(htmlspecialchars($descPoste[$index])) . '</p>';
+        $html .= '<strong>' . htmlspecialchars($ent) . '</strong> - ' . htmlspecialchars($poste[$index] ?? '');
+        $html .= '<br><span class="date">' . htmlspecialchars($dateDebut[$index] ?? '') . ' à ' . htmlspecialchars($dateFin[$index] ?? '') . '</span>';
+        $html .= '<p style="margin-top:5px;">' . nl2br(htmlspecialchars($descPoste[$index] ?? '')) . '</p>';
         $html .= '</div>';
     }
 }
 
-$html .= '</div><div class="separator"></div></div>';
+$html .= '</div></div>';
+
+$html .= '<div class="separator"></div>';
+
+$html .= '<div class="section"><h3>Formations</h3><div class="text-start-block">';
+foreach ($ecole as $index => $esc) {
+    if (!empty($esc)) {
+        $html .= '<div style="margin-bottom:15px;">';
+        $html .= '<strong>' . htmlspecialchars($diplome[$index] ?? '') . '</strong> - ' . htmlspecialchars($esc);
+        $html .= '<br><span class="date">' . htmlspecialchars($anneeDebut[$index] ?? '') . ' à ' . htmlspecialchars($anneeFin[$index] ?? '') . '</span>';
+        $html .= '</div>';
+    }
+}
+$html .= '</div></div>';
+
+$html .= '<div class="separator"></div>';
 
 $html .= '<div class="section"><h3>Compétences</h3><div class="comp-container">';
 if (!empty($competence)) {
@@ -139,55 +154,48 @@ if (!empty($competence)) {
             $imgName = "html-5";
         } elseif ($imgName == "js") {
             $imgName = "javascript";
-        } 
+        }
 
         $imgPath = __DIR__ . '/ressources/icons8-' . $imgName . '-50.png';
-        
+
         $html .= '<div class="comp-item">';
         $html .= '<strong>' . htmlspecialchars($comp) . '</strong>';
-        
+
         if (file_exists($imgPath)) {
             $dataImg = file_get_contents($imgPath);
             $base64Img = 'data:image/png;base64,' . base64_encode($dataImg);
             $html .= '<img src="' . $base64Img . '">';
-        } else { 
         }
         $html .= '</div>';
     }
 }
-        $html .= '</div>';
-    
+$html .= '</div></div>';
 
-$html .= '</div><div class="separator"></div></div>';
+$html .= '<div class="separator"></div>';
 
 $html .= '<div class="section"><h3>Langues</h3><div class="text-start-block">';
 foreach ($langues as $index => $lang) {
     if (!empty($lang)) {
-        $html .= '<div><strong>' . htmlspecialchars($lang) . '</strong> : ' . htmlspecialchars($niveau[$index]) . '</div>';
+        $html .= '<div><strong>' . htmlspecialchars($lang) . '</strong> : ' . htmlspecialchars($niveau[$index] ?? '') . '</div>';
     }
 }
-$html .= '</div><div class="separator"></div></div>';
+$html .= '</div></div>';
 
-$html .= '      </td>
-                    <td style="width: 50%; vertical-align: top;">
-                        <h3>Centres d\'intérêt</h3>';
-if (!empty($interet1)) $html .= '<div>• ' . $interet1 . '</div>';
-if (!empty($interet2)) $html .= '<div>• ' . $interet2 . '</div>';
-$html .= '      </td>
-                </tr>
-            </table>
-        </div>';
+$html .= '<div class="separator"></div>';
+
+$html .= '<div class="section"><h3>Centres d\'intérêt</h3><div class="text-start-block">';
+if (!empty($interet1)) $html .= '<div>• ' . htmlspecialchars($interet1) . '</div>';
+if (!empty($interet2)) $html .= '<div>• ' . htmlspecialchars($interet2) . '</div>';
+$html .= '</div></div>';
 
 $html .= '</div></body></html>';
 
-
-$dompfd = new Dompdf($options);
-$dompfd -> loadHtml($html);
-$dompfd -> setPaper("A4", "portrait");
-$dompfd -> render();
-
-ob_end_clean(); 
-
-$dompfd->stream("mon_cv.pdf", ["Attachment" => false]);
-exit();
-
+try {
+    $dompfd = new Dompdf($options);
+    $dompfd->loadHtml($html);
+    $dompfd->setPaper("A4", "portrait");
+    $dompfd->render();
+    $dompfd->stream("mon_cv.pdf", ["Attachment" => false]);
+} catch (Exception $e) {
+    echo "Erreur lors de la génération du PDF : " . $e->getMessage();
+}
