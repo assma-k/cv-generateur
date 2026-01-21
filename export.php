@@ -1,31 +1,31 @@
 <?php
-require "vendor/autoload.php";
 
-use Dompdf\Options;
 use Dompdf\Dompdf;
+use Dompdf\Options;
 
-$options = new Options();
-$options->set('isRemoteEnabled', true);
-$options->set('isHtml5ParserEnabled', true);
-$options->set('chroot', __DIR__);
+require "vendor/autoload.php";
+ini_set('memory_limit', '256M');
 
-$photo = "";
+if (isset($_FILES['photo'])) {
+    $error_code = $_FILES['photo']['error'];
 
-if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
-    $uploaddir = __DIR__ . '/uploads/';
-    @mkdir($uploaddir, 0777, true);
+    if ($error_code === UPLOAD_ERR_OK) {
+        $c_image = $_FILES['photo']['name'];
+        $c_image_tmp = $_FILES['photo']['tmp_name'];
+        $image_dir =  __DIR__ .  "/upload/$c_image";
+        if (move_uploaded_file($c_image_tmp, $image_dir)) {
+            echo "Succès !";
+        } else {
+            echo "Erreur lors du déplacement du fichier. Vérifiez le dossier 'upload'.";
+        }
+    } else {
+        echo "Code d'erreur d'upload : " . $error_code;
+    }
+} else {
+    echo "Aucun fichier reçu. Vérifiez l'attribut enctype du formulaire.";
+}
 
-    $filename = time() . '_' . $_FILES['photo']['name'];
-    $uploadfile = $uploaddir . $filename;
 
-    if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadfile)) {
-        $type = pathinfo($uploadfile, PATHINFO_EXTENSION);
-        $data = file_get_contents($uploadfile);
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        $photo = '<img src="' . $base64 . '" style="width:120px; height:120px; border-radius:50%;">';
-    };
-};
-echo $photo;
 
 $nom = isset($_POST["nom"]) ? htmlspecialchars($_POST["nom"]) : "";
 $prenom = isset($_POST["prenom"]) ? htmlspecialchars($_POST["prenom"]) : "";
@@ -51,6 +51,21 @@ $niveau = isset($_POST["niveau"]) ? $_POST["niveau"] : [];
 
 $interet1 = isset($_POST["interet1"]) ? htmlspecialchars($_POST["interet1"]) : "";
 $interet2 = isset($_POST["interet2"]) ? htmlspecialchars($_POST["interet2"]) : "";
+
+$path = __DIR__ . '/upload/' . $c_image;
+
+// 2. On vérifie si le fichier existe vraiment avant de continuer
+if (file_exists($path)) {
+    $type = pathinfo($path, PATHINFO_EXTENSION);
+    $data = file_get_contents($path);
+    $base64 = base64_encode($data);
+    // On nettoie tout caractère parasite et on force le type
+    $src = 'data:image/jpeg;base64,' . trim($base64);
+
+    $html = '<img src="' . $src . '" width="200" />';
+} else {
+    die("L'image n'a pas été trouvée à cet endroit : " . $path);
+}
 
 $html = <<<EOD
 <!DOCTYPE html>
@@ -103,7 +118,7 @@ $html = <<<EOD
 <body>
     <div class="cv-container">
         <div class="header">
-            $photo
+         $html 
             <h1>$prenom $nom</h1>
             <p><strong>$postev</strong></p>
             <p>$email | $numero</p>
@@ -190,12 +205,13 @@ $html .= '</div></div>';
 
 $html .= '</div></body></html>';
 
-try {
-    $dompfd = new Dompdf($options);
-    $dompfd->loadHtml($html);
-    $dompfd->setPaper("A4", "portrait");
-    $dompfd->render();
-    $dompfd->stream("mon_cv.pdf", ["Attachment" => false]);
-} catch (Exception $e) {
-    echo "Erreur lors de la génération du PDF : " . $e->getMessage();
-}
+ob_clean();
+$options = new Options();
+$options->set('isRemoteEnabled', true);
+$options->set('isHtml5ParserEnabled', true);
+$options->set('chroot', __DIR__);
+$dompfd = new Dompdf($options);
+$dompfd->loadHtml($html);
+$dompfd->setPaper("A4", "portrait");
+$dompfd->render();
+$dompfd->stream("mon_cv.pdf", ["Attachment" => false]);
