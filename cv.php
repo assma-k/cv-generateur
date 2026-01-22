@@ -6,15 +6,25 @@
     <title>Génerateur de CV</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <style>
-        body,
-        html {
-            height: 100%;
-            overflow: hidden;
+        body::-webkit-scrollbar {
+
+            display: none;
+
         }
 
-        .scroll-column {
-            height: 100vh;
-            overflow-y: auto;
+        @media (min-width: 992px) {
+
+            body,
+            html {
+                height: 100%;
+                overflow: hidden;
+            }
+
+
+            .scroll-column {
+                height: 100vh;
+                overflow-y: auto;
+            }
         }
     </style>
 </head>
@@ -23,9 +33,9 @@
     <div class="container-fluid p-0">
         <div class="row g-0">
 
-            <div class="col-12 col-lg-6 min-vh-100 bg-dark text-light p-4 scroll-column" data-bs-theme="dark">
+            <div class="col-12 col-lg-6 min-vh-100 p-4 scroll-column bg-body text-body" data-bs-theme="dark" id="gauche">
                 <div class="p-3 text-end">
-                    <button class="btn btn-outline-secondary" id="themeToggler" onclick="toggleMode()">
+                    <button class="btn btn-outline-secondary" id="darkbtn">
                         <span id="themeIcon">🌙</span> Mode Sombre
                     </button>
                 </div>
