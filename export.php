@@ -62,7 +62,7 @@ if (file_exists($path)) {
     // On nettoie tout caractère parasite et on force le type
     $src = 'data:image/jpeg;base64,' . trim($base64);
 
-    $html = '<img src="' . $src . '" width="200" />';
+    $html = '<img src="' . $src . '" width="500" height="500" style="width: 120px; height: 120px; border-radius: 60px; display: block; margin: 0 auto 10px auto;"/>';
 } else {
     die("L'image n'a pas été trouvée à cet endroit : " . $path);
 }

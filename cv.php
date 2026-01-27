@@ -39,7 +39,7 @@
                         <span id="themeIcon">🌙</span> Mode Sombre
                     </button>
                 </div>
-                <form action="export.php" method="post" enctype="multipart/form-data">
+                <form action="export.php" method="post" target="_blank" enctype="multipart/form-data">
                     <fieldset>
                         <h2 class="ms-2 mt-3 mb-3">informations général</h2>
                         <input type="file" id="photo" name="photo" class="form-control rounded p-2 w-75 ms-2 mt-3 mb-3" onchange="photoCv()" />
