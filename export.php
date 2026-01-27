@@ -62,7 +62,7 @@ if (file_exists($path)) {
     // On nettoie tout caractère parasite et on force le type
     $src = 'data:image/jpeg;base64,' . trim($base64);
 
-    $html = '<img src="' . $src . '" width="500" height="500" style="width: 120px; height: 120px; border-radius: 60px; display: block; margin: 0 auto 10px auto;"/>';
+    $html = '<img src="' . $src . '" style="width: 120px; height: 120px; border-radius: 60px; display: block; margin: 0 auto 0px auto;"/>';
 } else {
     die("L'image n'a pas été trouvée à cet endroit : " . $path);
 }
@@ -73,10 +73,10 @@ $html = <<<EOD
 <head>
     <meta charset="UTF-8">
     <style>
-        body { font-family: 'Helvetica', sans-serif; font-size: 13px; color: #333; margin: 0; padding: 0; }
-        .cv-container { width: 90%; margin: 20px auto; text-align: center; }
+        body { width: 100%; font-family: 'Helvetica', sans-serif; font-size: 13px; color: #333; margin: 0; padding: 0; }
+        .cv-container { width: 100%; margin: 0px auto; text-align: center; }
 
-        .p-photo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; }
+        .p-photo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 5px; }
         
         .header h2 { margin: 5px 0; color: #000; font-size: 22px; }
         .header p { margin: 2px 0; color: #555; }
@@ -84,7 +84,7 @@ $html = <<<EOD
 
         #p-profil { 
             width: 75%; 
-            margin: 15px auto; 
+            margin: 5px auto; 
             text-align: center; 
             white-space: pre-wrap; 
             word-wrap: break-word;
@@ -95,13 +95,13 @@ $html = <<<EOD
             border: none; 
             border-bottom: 1px solid #000; 
             width: 80%; 
-            margin: 15px auto; 
+            margin: 0px auto; 
         }
 
         h3 { text-transform: uppercase; font-size: 16px; margin-top: 20px; }
         .text-start-block { text-align: left; width: 80%; margin: 0 auto; margin-bottom: 10px; }
 
-        .comp-container { text-align: center; margin-top: 10px; }
+        .comp-container { text-align: center; margin-top: 5px; }
         .comp-item { 
             display: inline-block; 
             width: 80px; 
@@ -135,7 +135,7 @@ EOD;
 
 foreach ($entreprise as $index => $ent) {
     if (!empty($ent)) {
-        $html .= '<div style="margin-bottom:15px;">';
+        $html .= '<div style="margin-bottom:5px;">';
         $html .= '<strong>' . htmlspecialchars($ent) . '</strong> - ' . htmlspecialchars($poste[$index] ?? '');
         $html .= '<br><span class="date">' . htmlspecialchars($dateDebut[$index] ?? '') . ' à ' . htmlspecialchars($dateFin[$index] ?? '') . '</span>';
         $html .= '<p style="margin-top:5px;">' . nl2br(htmlspecialchars($descPoste[$index] ?? '')) . '</p>';
@@ -150,7 +150,7 @@ $html .= '<div class="separator"></div>';
 $html .= '<div class="section"><h3>Formations</h3><div class="text-start-block">';
 foreach ($ecole as $index => $esc) {
     if (!empty($esc)) {
-        $html .= '<div style="margin-bottom:15px;">';
+        $html .= '<div style="margin-bottom:5px;">';
         $html .= '<strong>' . htmlspecialchars($diplome[$index] ?? '') . '</strong> - ' . htmlspecialchars($esc);
         $html .= '<br><span class="date">' . htmlspecialchars($anneeDebut[$index] ?? '') . ' à ' . htmlspecialchars($anneeFin[$index] ?? '') . '</span>';
         $html .= '</div>';
